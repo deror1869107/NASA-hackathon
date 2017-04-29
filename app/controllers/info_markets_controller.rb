@@ -10,9 +10,13 @@ class InfoMarketsController < ApplicationController
     render :json => res.to_json
   end
 
+  def find_by_token
+    render :json => InfoMarket.find_by(token: params["token"])
+  end
+
   private
 
   def info_params
-    params.require(:info_markets).permit(:near, :forNum, :againstNum)
+    params.require(:info_market).permit(:near, :forNum, :againstNum)
   end
 end

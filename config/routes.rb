@@ -5,4 +5,5 @@ Rails.application.routes.draw do
 
   get "info_markets/result"
   post "info_markets/create"
+  post "info_markets/find_by_token"
 end
