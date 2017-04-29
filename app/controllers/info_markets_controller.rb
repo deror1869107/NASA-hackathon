@@ -6,7 +6,12 @@ class InfoMarketsController < ApplicationController
   end
 
   def result
-    res = {forNum: InfoMarket.group(:near).sum(:forNum), againstNum: InfoMarket.group(:near).sum(:againstNum)}
+    forNum = InfoMarket.group(:near).sum(:forNum)
+    againstNum =InfoMarket.group(:near).sum(:againstNum)
+    res = []
+    forNum.each do |key, value|
+      res.push({near: key, forNum: forNum[key], againstNum: againstNum[key]})
+    end
     render :json => res.to_json
   end
 
