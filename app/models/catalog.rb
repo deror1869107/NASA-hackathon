@@ -4,6 +4,6 @@ class Catalog < ApplicationRecord
   protected
 
   def call_server
-    CallServerJob.perform_later
+    CallServerJob.perform_now self
   end
 end

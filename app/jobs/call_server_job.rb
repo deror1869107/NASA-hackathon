@@ -1,10 +1,14 @@
 class CallServerJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
+  def perform(catalog)
     # Do something later
     require 'net/http'
-    Net::HTTP.get('8c433e9c.ngrok.io', '/update_points')
+    uri = URI('http://nasa2017.pagekite.me/new')
+    http = Net::HTTP.new(uri.host, uri.port)
+    req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
+    req.body = catalog.to_json
+    http.request req
   end
 end
 
