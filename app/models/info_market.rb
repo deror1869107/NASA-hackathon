@@ -1,0 +1,2 @@
+class InfoMarket < ApplicationRecord
+end
