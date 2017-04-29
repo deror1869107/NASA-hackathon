@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170429025123) do
+ActiveRecord::Schema.define(version: 20170429142822) do
 
   create_table "catalogs", force: :cascade do |t|
     t.date "date"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20170429025123) do
     t.string "trigger"
     t.string "storm_name"
     t.string "fatalities"
-    t.integer "injuries"
+    t.string "injuries"
     t.string "source_name"
     t.string "source_link"
     t.string "location_description"
