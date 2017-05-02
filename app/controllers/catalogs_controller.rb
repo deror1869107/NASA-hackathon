@@ -3,6 +3,10 @@ class CatalogsController < ApplicationController
     render :json => Catalog.all
   end
 
+  def index
+    @catalogs = Catalog.all
+  end
+
   def create
     params.permit!
     Catalog.create(catalog_params)
