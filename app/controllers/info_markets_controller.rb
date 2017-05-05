@@ -1,8 +1,15 @@
 class InfoMarketsController < ApplicationController
+  include Recaptcha::Verify
+
   def create
     token = SecureRandom.base58
-    InfoMarket.create(near: info_params["near"], forNum: info_params["forNum"], againstNum: info_params["againstNum"], token: token)
-    render :json => token
+    @infomarket = InfoMarket.new(near: info_params["near"], forNum: info_params["forNum"], againstNum: info_params["againstNum"], token: token)
+    if verify_recaptcha(response: info_params[:response]) && @infomarket.save
+      res = {success: true, text: token}
+    else
+      res = {success: false, text: "ReCAPTCHA failed"}
+    end
+    render :json => res.to_json
   end
 
   def result
@@ -22,6 +29,6 @@ class InfoMarketsController < ApplicationController
   private
 
   def info_params
-    params.require(:info_market).permit(:near, :forNum, :againstNum)
+    params.require(:info_market).permit(:near, :forNum, :againstNum, :response)
   end
 end
