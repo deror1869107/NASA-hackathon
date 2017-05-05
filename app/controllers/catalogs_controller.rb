@@ -1,4 +1,6 @@
 class CatalogsController < ApplicationController
+  include Recaptcha::Verify
+
   def all
     render :json => Catalog.all
   end
@@ -8,8 +10,15 @@ class CatalogsController < ApplicationController
   end
 
   def create
+    response = params["response"]
     params.permit!
-    Catalog.create(catalog_params)
+    @catalog = Catalog.new(catalog_params)
+    if verify_recaptcha(response: response) && @catalog.save
+      res = {success: true}
+    else
+      res = {success: false}
+    end
+    render :json => res.to_json
   end
 
   private
